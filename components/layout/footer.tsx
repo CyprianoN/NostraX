@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="w-full border-t bg-background">
       <div className="w-full py-8 px-6">
         <div className="text-center text-sm text-muted-foreground">
-          © 2025 NostraX Prediction Market. 
+          © 2025 NostraX Prediction Market
         </div>
       </div>
     </footer>
