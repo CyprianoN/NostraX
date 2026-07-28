@@ -7,7 +7,6 @@ import { Toaster } from "sonner";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,7 +14,11 @@ export const metadata: Metadata = {
   description: "Decentralized prediction markets",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
@@ -24,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="flex min-h-screen flex-col w-full">
               <Header />
               <main className="flex-1 w-full">{children}</main>
-              <Footer/>
+              <Footer />
             </div>
             <Toaster richColors position="top-right" />
           </Web3Provider>

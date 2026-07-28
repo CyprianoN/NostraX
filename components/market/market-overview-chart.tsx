@@ -106,7 +106,7 @@ export function MarketOverviewChart({
           </div>
         ) : (
           <>
-            {/* Probability Bar Chart */}
+            {/* Probability Bar Chart  */}
             <div className="mb-8">
               <h4 className="text-sm font-medium mb-4">
                 Current Probabilities
