@@ -1,7 +1,22 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+} from "recharts";
 import { useMarketPrice, useTotalPool } from "@/lib/hooks/useMarkets";
 import { formatCurrency } from "@/lib/utils/format";
 import { useReadContract } from "wagmi";
@@ -16,7 +31,11 @@ interface MarketOverviewChartProps {
   totalVolume: bigint;
 }
 
-export function MarketOverviewChart({ marketId, outcomes, totalVolume }: MarketOverviewChartProps) {
+export function MarketOverviewChart({
+  marketId,
+  outcomes,
+  totalVolume,
+}: MarketOverviewChartProps) {
   const { data: totalPool } = useTotalPool(marketId);
 
   // Get REAL data from blockchain for each outcome
@@ -39,7 +58,14 @@ export function MarketOverviewChart({ marketId, outcomes, totalVolume }: MarketO
   });
 
   // Color palette
-  const COLORS = ['#10b981', '#3b82f6', '#1f2937', '#f59e0b', '#8b5cf6', '#ec4899'];
+  const COLORS = [
+    "#10b981",
+    "#3b82f6",
+    "#1f2937",
+    "#f59e0b",
+    "#8b5cf6",
+    "#ec4899",
+  ];
 
   // Format ETH
   const formatETH = (wei: number) => {
@@ -48,7 +74,7 @@ export function MarketOverviewChart({ marketId, outcomes, totalVolume }: MarketO
   };
 
   // Check if there's any data
-  const hasData = outcomesData.some(d => d.probability > 0 || d.pool > 0);
+  const hasData = outcomesData.some((d) => d.probability > 0 || d.pool > 0);
 
   return (
     <Card>
@@ -56,7 +82,9 @@ export function MarketOverviewChart({ marketId, outcomes, totalVolume }: MarketO
         <div className="flex items-center justify-between">
           <div>
             <CardTitle>Market Overview</CardTitle>
-            <CardDescription>Current probabilities and pool distribution</CardDescription>
+            <CardDescription>
+              Current probabilities and pool distribution
+            </CardDescription>
           </div>
           <div className="text-right space-y-1">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -80,23 +108,39 @@ export function MarketOverviewChart({ marketId, outcomes, totalVolume }: MarketO
           <>
             {/* Probability Bar Chart */}
             <div className="mb-8">
-              <h4 className="text-sm font-medium mb-4">Current Probabilities</h4>
+              <h4 className="text-sm font-medium mb-4">
+                Current Probabilities
+              </h4>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={outcomesData} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" opacity={0.5} />
-                  <XAxis type="number" domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="#e5e7eb"
+                    opacity={0.5}
+                  />
+                  <XAxis
+                    type="number"
+                    domain={[0, 100]}
+                    tickFormatter={(v) => `${v}%`}
+                  />
                   <YAxis type="category" dataKey="name" width={100} />
                   <Tooltip
-                    formatter={(value: number | string) => [`${value}%`, 'Probability']}
+                    formatter={(value) => [
+                      `${value == null ? 0 : value}%`,
+                      "Probability",
+                    ]}
                     contentStyle={{
-                      backgroundColor: '#fff',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '8px',
+                      backgroundColor: "#fff",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "8px",
                     }}
                   />
                   <Bar dataKey="probability" radius={[0, 8, 8, 0]}>
                     {outcomesData.map((_, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
                     ))}
                   </Bar>
                 </BarChart>
@@ -120,16 +164,23 @@ export function MarketOverviewChart({ marketId, outcomes, totalVolume }: MarketO
                   </div>
                   <div className="flex items-center gap-4 text-sm">
                     <div className="text-right">
-                      <div className="font-bold text-lg" style={{ color: COLORS[idx % COLORS.length] }}>
+                      <div
+                        className="font-bold text-lg"
+                        style={{ color: COLORS[idx % COLORS.length] }}
+                      >
                         {data.probability}%
                       </div>
-                      <div className="text-xs text-muted-foreground">Probability</div>
+                      <div className="text-xs text-muted-foreground">
+                        Probability
+                      </div>
                     </div>
                     <div className="text-right">
                       <div className="font-medium">
                         {formatETH(data.pool)} ETH
                       </div>
-                      <div className="text-xs text-muted-foreground">Pool Size</div>
+                      <div className="text-xs text-muted-foreground">
+                        Pool Size
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -140,8 +191,12 @@ export function MarketOverviewChart({ marketId, outcomes, totalVolume }: MarketO
             <div className="mt-6 p-4 bg-muted rounded-lg">
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div>
-                  <div className="text-2xl font-bold">{formatCurrency(totalVolume)}</div>
-                  <div className="text-sm text-muted-foreground">Total Volume</div>
+                  <div className="text-2xl font-bold">
+                    {formatCurrency(totalVolume)}
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    Total Volume
+                  </div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold">{outcomes.length}</div>
